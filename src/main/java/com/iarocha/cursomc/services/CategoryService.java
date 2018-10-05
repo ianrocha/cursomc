@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.iarocha.cursomc.domain.Category;
 import com.iarocha.cursomc.repositories.CategoryRepository;
+import com.iarocha.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class CategoryService {
@@ -16,6 +17,8 @@ public class CategoryService {
 	
 	public Category getCategory(Integer id) {
 		Optional<Category> obj = repo.findById(id);
-		return obj.orElse(null);
+//		return obj.orElse(null);
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Object not found ID: " + id + ", Tipo: " + Category.class.getName()));
 	}
 }
